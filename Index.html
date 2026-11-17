@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo da Velha</title>
+    
+    <!-- Confetes para vitória -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <!-- Chamando o CSS (verifique o caminho!) -->
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+    <canvas id="bgCanvas"></canvas>
+
+    <!-- Área de Login -->
+    <div id="authModal" class="hidden">
+        <div class="auth-card">
+            <h2 id="authTitle">🔑 Identificação do Jogador</h2>
+            <p id="authDesc">Crie sua conta ou faça login:</p>
+            <div class="auth-input-group">
+                <label>Nome de Usuário:</label>
+                <input type="text" id="inputAuthUser" placeholder="Seu nome">
+            </div>
+            <div class="auth-input-group">
+                <label>Senha:</label>
+                <input type="password" id="inputAuthPass" placeholder="Sua senha">
+            </div>
+            <button class="action-btn" onclick="processarAutenticacao()">Entrar / Criar Conta 🚀</button>
+        </div>
+    </div>
+
+    <div id="customImagesContainer"></div>
+
+    <div class="fixed-bg">
+        <span class="fixed-item">🐼</span>
+        <span class="fixed-item">🐨</span>
+        <span class="fixed-item">🐯</span>
+        <span class="fixed-item">🦁</span>
+    </div>
+
+    <div class="top-bar">
+        <h1>🔥 Jogo da Velha 🔥</h1>
+        <div class="menu-buttons-group">
+            <button class="menu-icon-btn" id="btnTop10Icon" onclick="toggleMenu('top10Menu')" title="Top 10">🏆</button>
+            <button class="menu-icon-btn" onclick="toggleMenu('mainMenu')" title="Menu">☰</button>
+        </div>
+    </div>
+
+    <!-- Menu Lateral -->
+    <div id="mainMenu" class="side-menu">
+        <div class="menu-header">
+            <h2>Opções do Jogo</h2>
+            <button class="close-icon" onclick="toggleMenu('mainMenu')">✕</button>
+        </div>
+        <button class="close-menu-btn" onclick="toggleMenu('mainMenu')">Fechar Menu</button>
+        
+        <div class="menu-section">
+            <button class="accordion-btn" onclick="toggleAccordion('acc-modo')">
+                <span>🎮 Modo de Jogo</span>
+                <span class="arrow" id="arrow-acc-modo">▼</span>
+            </button>
+            <div id="acc-modo" class="accordion-content">
+                <select id="modoJogo" onchange="mudarModoJogo()">
+                    <option value="pvp">2 Jogadores</option>
+                    <option value="pve">Contra o Computador</option>
+                </select>
+                <div id="containerDificuldade" style="margin-top: 8px; display: none;">
+                    <label>Dificuldade:</label>
+                    <select id="dificuldadeIA">
+                        <option value="facil">Fácil</option>
+                        <option value="medio">Médio</option>
+                        <option value="dificil">Difícil</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="menu-section">
+            <button class="accordion-btn" onclick="toggleAccordion('acc-cores')">
+                <span>🎨 Tema</span>
+                <span class="arrow" id="arrow-acc-cores">▼</span>
+            </button>
+            <div id="acc-cores" class="accordion-content">
+                <button class="action-btn" onclick="mudarTema('cyber')">🌌 Cyber Neon</button>
+                <button class="action-btn" onclick="mudarTema('light')">☀️ Claro</button>
+                <button class="action-btn" onclick="mudarTema('dark')">🌑 Escuro</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Placar -->
+    <div class="scoreboard">
+        <div class="player-card">
+            <span id="simboloX">❌</span>
+            <span id="nomeX">Jogador X</span>
+            <strong id="placarX">0</strong>
+        </div>
+        <div class="versus">VS</div>
+        <div class="player-card">
+            <strong id="placarO">0</strong>
+            <span id="nomeO">Jogador O</span>
+            <span id="simboloO">⭕</span>
+        </div>
+    </div>
+
+    <div id="timer" class="timer">⏱️ 00:00</div>
+    <div id="status" class="status">Vez do jogador ❌</div>
+
+    <!-- Tabuleiro -->
+    <div class="tabuleiro" id="tabuleiro">
+        <div class="celula" data-indice="0"></div>
+        <div class="celula" data-indice="1"></div>
+        <div class="celula" data-indice="2"></div>
+        <div class="celula" data-indice="3"></div>
+        <div class="celula" data-indice="4"></div>
+        <div class="celula" data-indice="5"></div>
+        <div class="celula" data-indice="6"></div>
+        <div class="celula" data-indice="7"></div>
+        <div class="celula" data-indice="8"></div>
+    </div>
+
+    <div class="botoes-controle">
+        <button class="action-btn" onclick="reiniciarJogo()">🔄 Reiniciar Jogo</button>
+        <button class="action-btn" onclick="reiniciarPlacar()">🏁 Zerar Placar</button>
+    </div>
+
+    <!-- Chamando o JavaScript -->
+    <script src="js/script.js"></script>
+</body>
+</html>
